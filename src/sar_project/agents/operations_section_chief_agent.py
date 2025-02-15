@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 
 class OperationsSectionChiefAgent(SARBaseAgent):
-    def __init__(self, name="operations_section_chief"):
+    def __init__(self, name="operations_section_chief", knowledge_base=None):
         super().__init__(
             name=name,
             role="Operations Section Chief",
@@ -11,22 +11,22 @@ class OperationsSectionChiefAgent(SARBaseAgent):
             1. Follow the mission objectives given by the Incident Commander
             2. Deploy Search and Rescue teams
             3. Send information to the Search and Rescue teams in order to achieve the mission objectives
-            4. Adapt strategies based on field reports given by the Search and Rescue teams"""
+            4. Adapt strategies based on field reports given by the Search and Rescue teams""", 
+            knowledge_base=knowledge_base
         )
-        self.current_conditions = {}
-        self.forecasts = {}
+        self.mission_objectives = []
 
 
-    def process_message(self, message: dict):
+    def process_request(self, message: dict):
         try:
             # need to know who sent the message
             if "source" not in message:
                 return {"error": "Message does not have a source"}
 
             if message["source"] == "incident_commander":
-                return self._process_message_from_incident_commander(message)
+                return self._process_request_from_incident_commander(message)
             elif message["source"] == "search_team_leader":
-                return self._process_message_from_search_team_leader(message)
+                return self._process_request_from_search_team_leader(message)
             else:
                 return {"error": "Unexpected message source"}
 
@@ -34,12 +34,54 @@ class OperationsSectionChiefAgent(SARBaseAgent):
             return {"error": str(e)}
 
 
-    def _process_message_from_incident_commander(self, message: dict):
-        ...
+    def _process_request_from_incident_commander(self, message: dict):
+        response = {}
+
+        # require location
+        if "location" not in message:
+            return {"error": "Location was not provided"}
+
+        # update knowledge base
+        kb_updated = self._update_knowledge_base(message)
+        response["knowledge_base_updated"] = kb_updated
+
+        # get mission objectives
+        if "mission_objectives" in message:
+            self.mission_objectives = message["mission_objectives"]
+
+            # TODO: process mission objectives
+
+            # indicate that mission objectives are understood
+            response["mission_objectives_understood"] = True
+
+            # TODO: send instructions to Search Team Leaders
+
+        return response
 
 
-    def _process_message_from_search_team_leader(self, message: dict):
-        ...
+    def _process_request_from_search_team_leader(self, message: dict):
+        # TODO
+        pass
+
+
+    def _update_knowledge_base(self, message: dict) -> bool:
+        """Update the agent's knowledge base based on a message. 
+        Return True if knowledge base was updated.
+        """
+        kb_updated = False
+
+        if "terrain_data" in message:
+            self.kb.update_terrain(message["location"], message["terrain_data"])
+            kb_updated = True
+        if "weather_data" in message:
+            self.kb.update_weather(message["location"], message["weather_data"])
+            kb_updated = True
+        if "resources" in message:
+            for r in message["resources"].keys():
+                self.kb.update_resource_status(r, message["resources"][r])
+            kb_updated = True
+
+        return kb_updated
 
 
     # function copied from Ashton Alonge's message on Slack
