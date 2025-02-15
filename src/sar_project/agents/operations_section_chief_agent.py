@@ -1,5 +1,52 @@
 from sar_project.agents.base_agent import SARBaseAgent
-import google.generativeai as genai
+# import google.generativeai as genai
+from google import genai
+# from google.genai.types import HttpOptions
+import json
+
+
+# message to explain the LLM's role in the SAR system
+system_message = """You are the Operations Section Chief for Search and Rescue (SAR) operations. Your role is to:
+            1. Follow the mission objectives given by the Incident Commander.
+            2. Deploy Search and Rescue teams.
+            3. Send information to the Search and Rescue teams in order to achieve the mission objectives.
+            4. Adapt strategies based on field reports given by the Search and Rescue teams.
+            """
+# message to tell the LLM to update its knowledge base (string input, JSON output)
+kb_message = """Your current task is to update your knowledge base with information provided by the Incident Commander. 
+Convert the following information into JSON:
+"""
+
+terrain_schema = {
+    "type": "OBJECT",
+    "properties": {
+        "description": {"type": "STRING"}, 
+        "elevation": {"type": "INTEGER"},
+        "obstacles": {"type": "ARRAY", "items": {"type": "STRING"}},
+    },
+    "required": ["description", "elevation", "obstacles"]
+}
+weather_schema = {
+    "type": "OBJECT",
+    "properties": {
+        "description": {"type": "STRING"}, 
+        "temperature": {"type": "INTEGER"},
+        "wind_speed": {"type": "INTEGER"},
+    },
+    "required": ["description", "temperature", "wind_speed"]
+}
+resources_schema = {
+    "type": "ARRAY", 
+    "items": {
+        "type": "OBJECT",
+        "properties": {
+            "description": {"type": "STRING"}, 
+            "availability": {"type": "STRING"},
+            "location": {"type": "STRING"},
+        },
+        "required": ["description", "availability", "location"]
+    }
+}
 
 
 class OperationsSectionChiefAgent(SARBaseAgent):
@@ -7,13 +54,10 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         super().__init__(
             name=name,
             role="Operations Section Chief",
-            system_message="""You are the Operations Section Chief for Search and Rescue (SAR) operations. Your role is to:
-            1. Follow the mission objectives given by the Incident Commander
-            2. Deploy Search and Rescue teams
-            3. Send information to the Search and Rescue teams in order to achieve the mission objectives
-            4. Adapt strategies based on field reports given by the Search and Rescue teams""", 
+            system_message=system_message, 
             knowledge_base=knowledge_base
         )
+        self.genai_client = genai.Client()
         self.mission_objectives = []
 
 
@@ -71,27 +115,84 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         kb_updated = False
 
         if "terrain_data" in message:
-            self.kb.update_terrain(message["location"], message["terrain_data"])
-            kb_updated = True
+            response, error = self._text_to_kb_data(terrain_schema, message["terrain_data"])
+            if error is None:
+                self.kb.update_terrain(message["location"], response)
+                kb_updated = True
+            else:
+                print(error)
+
         if "weather_data" in message:
-            self.kb.update_weather(message["location"], message["weather_data"])
-            kb_updated = True
+            response, error = self._text_to_kb_data(weather_schema, message["weather_data"])
+            if error is None:
+                self.kb.update_weather(message["location"], response)
+                kb_updated = True
+            else:
+                print(error)
+        
         if "resources" in message:
-            for r in message["resources"].keys():
-                self.kb.update_resource_status(r, message["resources"][r])
-            kb_updated = True
+            response, error = self._text_to_kb_data(resources_schema, message["resources_data"])
+            if error is None:
+                for r in response.keys():
+                    self.kb.update_resource_status(r, response[r])
+                kb_updated = True
+            else:
+                print(error)
 
         return kb_updated
 
 
-    # function copied from Ashton Alonge's message on Slack
-    def _query_gemini(self, prompt, model="gemini-pro", max_tokens=200):
-        """Query Google Gemini API and return response."""
+    def _text_to_kb_data(self, schema, text: str) -> tuple:
+        """Input: Google Gemini JSON schema and text to convert into JSON.
+        Output: 2-Tuple of the JSON result (made of lists/dicts) 
+        and an error message, which is None if there is no error.
+        """
+        prompt = system_message + kb_message + text
+        response = self._generate_json_str(prompt, schema)
+
+        if (response.startswith("Error")):
+            return {}, response
+
+        # return parsed JSON
         try:
-            response = genai.GenerativeModel(model).generate_content(prompt)
+            parsed_response = json.loads(response)
+            return parsed_response, None
+        except Exception as e:
+            return {}, f"Error: {e}"
+
+
+    # https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/control-generated-output
+    def _generate_json_str(self, prompt, response_schema):
+        try:
+            response = self.genai_client.models.generate_content(
+                model="gemini-2.0-flash", 
+                contents=prompt, 
+                config={
+                    "response_mime_type": "application/json",
+                    "response_schema": response_schema
+                }
+            )
             return response.text
         except Exception as e:
             return f"Error: {e}"
+
+    # # function copied from Ashton Alonge's message on Slack
+    # def _query_gemini(self, prompt, model="gemini-pro", max_tokens=200):
+    #     """Query Google Gemini API and return response."""
+    #     try:
+    #         # response = genai.GenerativeModel(model).generate_content(prompt)
+    #         # return response.text
+    #         response = self.genai_client.models.generate_content(
+    #             model=model, 
+    #             contents=prompt, 
+    #             config={
+    #                 "response_mime_type": "application/json",
+    #                 "response_schema": response_schema
+    #             })
+    #         # TODO: return response as JSON
+    #         return response.text
+    #     except Exception as e:
+    #         return f"Error: {e}"
 
 
     def update_status(self, status):
