@@ -77,17 +77,17 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         try:
             # need to know who sent the message
             if "source" not in message:
-                return {"error": "Message does not have a source"}
+                return {"Error": "Message does not have a source"}
 
             if message["source"] == "incident_commander":
                 return self._process_request_from_incident_commander(message)
             elif message["source"] == "search_team_leader":
                 return self._process_request_from_search_team_leader(message)
             else:
-                return {"error": "Unexpected message source"}
+                return {"Error": "Unexpected message source"}
 
         except Exception as e:
-            return {"error": str(e)}
+            return {"Error": str(e)}
 
 
     def _process_request_from_incident_commander(self, message: dict):
@@ -98,7 +98,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
         # require location
         if "location" not in message:
-            return {"error": "Location was not provided"}
+            return {"Error": "Location was not provided"}
 
         # update knowledge base
         kb_updated = self._update_knowledge_base(message)
@@ -107,9 +107,12 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         # get mission objectives
         mission_objectives_understood = self._process_mission_objectives(message)
         response["mission_objectives_understood"] = mission_objectives_understood
+
+        # make a search plan
         if mission_objectives_understood:
-            # TODO: send instructions to Search Team Leaders
-             pass
+             plan = self._create_search_plan()
+             response["search_plan"] = plan
+            # TODO: send instructions to Search Team Leader
 
         return response
 
@@ -174,6 +177,29 @@ class OperationsSectionChiefAgent(SARBaseAgent):
             return True
         else:
             return False
+
+
+    def _create_search_plan(self) -> str:
+        """Uses mission objectives and knowledge base to generate a search plan."""
+        # TODO: implement functionality to make a plan for multiple search groups, with different resources
+
+        # make prompt with all the info
+        prompt = system_message 
+        prompt += f"Your current task is to create a search plan based on the mission objectives and other information. \n"
+        prompt += f"The mission objectives are: {self.mission_objectives} \n"
+        prompt += f"This is the terrain information: {self.kb.terrain_data} \n"
+        prompt += f"This is the weather information: {self.kb.weather_data} \n"
+        prompt += f"And finally, these are the available resources: {self.kb.resource_status}"
+
+        # generate plan
+        try:
+            response = self.genai_client.models.generate_content(
+                model="gemini-2.0-flash", 
+                contents=prompt
+            )
+            return response.text
+        except Exception as e:
+            return f"Error: {e}"
 
 
     def _text_to_kb_data(self, prompt: str, schema) -> tuple:
