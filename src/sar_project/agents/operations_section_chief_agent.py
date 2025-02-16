@@ -14,6 +14,10 @@ system_message = """You are the Operations Section Chief for Search and Rescue (
 kb_message = """Your current task is to update your knowledge base with information provided by the Incident Commander. 
 Convert the following information into JSON:
 """
+# message to tell the LLM to make a list of mission objectives, in order of highest to lowest importance
+mission_objectives_message = """Your current task is to determine your mission objectives based on the instructions provided by the Incident Commander. 
+Convert the following objectives into JSON, and rank them in order of highest to lowest importance:
+"""
 
 # schemas for putting information in the knowledge base. 
 # the LLM will take text input and generate JSON according to one of these schemas.
@@ -47,6 +51,13 @@ resources_schema = {
         "required": ["name", "availability", "location"]
     }
 }
+# schema for storing a list of mission objectives
+mission_objectives_schema = {
+    "type": "ARRAY", 
+    "items": {
+        "type": "STRING"
+    }
+}
 
 
 class OperationsSectionChiefAgent(SARBaseAgent):
@@ -62,6 +73,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
 
     def process_request(self, message: dict):
+        """Process a request from either the Incident Commander or Search Team Leader."""
         try:
             # need to know who sent the message
             if "source" not in message:
@@ -79,6 +91,9 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
 
     def _process_request_from_incident_commander(self, message: dict):
+        """Process a request from the Incident Commander, which should outline 
+        mission objectives and provide information for the knowledge base.
+        """
         response = {}
 
         # require location
@@ -90,15 +105,11 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         response["knowledge_base_updated"] = kb_updated
 
         # get mission objectives
-        if "mission_objectives" in message:
-            self.mission_objectives = message["mission_objectives"]
-
-            # TODO: process mission objectives
-
-            # indicate that mission objectives are understood
-            response["mission_objectives_understood"] = True
-
+        mission_objectives_understood = self._process_mission_objectives(message)
+        response["mission_objectives_understood"] = mission_objectives_understood
+        if mission_objectives_understood:
             # TODO: send instructions to Search Team Leaders
+             pass
 
         return response
 
@@ -109,13 +120,15 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
 
     def _update_knowledge_base(self, message: dict) -> bool:
-        """Update the agent's knowledge base based on a message. 
+        """Updates the agent's knowledge base based on a message. 
         Return True if knowledge base was updated.
         """
         kb_updated = False
+        prompt = system_message + kb_message
 
         if "terrain_data" in message:
-            response, error = self._text_to_kb_data(terrain_schema, message["terrain_data"])
+            prompt += message["terrain_data"]
+            response, error = self._text_to_kb_data(prompt, terrain_schema)
             if error is None:
                 self.kb.update_terrain(message["location"], response)
                 kb_updated = True
@@ -123,7 +136,8 @@ class OperationsSectionChiefAgent(SARBaseAgent):
                 print(error)
 
         if "weather_data" in message:
-            response, error = self._text_to_kb_data(weather_schema, message["weather_data"])
+            prompt += message["weather_data"]
+            response, error = self._text_to_kb_data(prompt, weather_schema)
             if error is None:
                 self.kb.update_weather(message["location"], response)
                 kb_updated = True
@@ -131,7 +145,8 @@ class OperationsSectionChiefAgent(SARBaseAgent):
                 print(error)
         
         if "resource_status" in message:
-            response, error = self._text_to_kb_data(resources_schema, message["resource_status"])
+            prompt += message["resource_status"]
+            response, error = self._text_to_kb_data(prompt, resources_schema)
             if error is None:
                 for resource_info in response:
                     resource_name = resource_info.pop("name")
@@ -143,12 +158,29 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         return kb_updated
 
 
-    def _text_to_kb_data(self, schema, text: str) -> tuple:
-        """Input: Google Gemini JSON schema and text to convert into JSON.
+    def _process_mission_objectives(self, message: dict):
+        """Given a message that may have mission objectives 
+        (message["mission_objectives"] should be a string), makes a list of mission objectives.
+        Returns True if the objectives could be identified, False otherwise.
+        """
+        if "mission_objectives" not in message:
+            return False
+
+        prompt = system_message + mission_objectives_message + message["mission_objectives"]
+        response, error = self._text_to_kb_data(prompt, mission_objectives_schema)
+
+        if error is None:
+            self.mission_objectives = response
+            return True
+        else:
+            return False
+
+
+    def _text_to_kb_data(self, prompt: str, schema) -> tuple:
+        """Input: A prompt and a Google Gemini JSON schema to specify the JSON output.
         Output: 2-Tuple of the JSON result (made of lists/dicts) 
         and an error message, which is None if there is no error.
         """
-        prompt = system_message + kb_message + text
         response = self._generate_json_str(prompt, schema)
 
         if (response.startswith("Error")):
@@ -163,7 +195,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
 
     # https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/control-generated-output
-    def _generate_json_str(self, prompt, response_schema):
+    def _generate_json_str(self, prompt: str, response_schema):
         """Based on a prompt, generates JSON according to the specified schema."""
         try:
             response = self.genai_client.models.generate_content(

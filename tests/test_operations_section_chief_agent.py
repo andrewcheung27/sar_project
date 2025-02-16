@@ -36,8 +36,8 @@ class TestOperationsSectionChiefAgent:
             "location": location, 
             "terrain_data": terrain_data
         }
-
         response = agent.process_request(message)
+
         assert response["knowledge_base_updated"] == True
 
         # TODO: test description?
@@ -65,8 +65,8 @@ class TestOperationsSectionChiefAgent:
             "location": location, 
             "weather_data": weather_data
         }
-
         response = agent.process_request(message)
+
         assert response["knowledge_base_updated"] == True
 
         # TODO: test description?
@@ -96,8 +96,8 @@ class TestOperationsSectionChiefAgent:
             "location": location, 
             "resource_status": resource_status_data
         }
-
         response = agent.process_request(message)
+
         assert response["knowledge_base_updated"] == True
 
         # identify the availability
@@ -109,20 +109,24 @@ class TestOperationsSectionChiefAgent:
         assert agent.kb.resource_status[resource2]["location"] == location2
 
 
-    # def test_process_message_from_incident_commander_mission_objectives(self, agent):
-    #     location = "San Luis Obispo"
-    #     mission_objectives = ["Make sure the ground pounders are safe during their search.", 
-    #                           "Find Bob, a 10-year-old student who went missing on a field trip to Cal Poly."]
+    # TESTS FOR GETTING MISSION OBJECTIVES FROM NATURAL LANGUAGE INPUT -------------------------------------------------
+    def test_mission_objectives(self, agent):
+        location = "San Luis Obispo"
+        obj1 = "make sure all of the search team members stay safe and are prepared for the conditions."
+        obj1_keyword = "safe"
+        obj2 = "find Bob, a 10-year-old student who went missing on a field trip to Cal Poly."
+        obj2_keyword = "Bob"
+        mission_objectives = f"First, you need to {obj1}. Your secondary objective is to {obj2}"
 
-    #     message = {
-    #         "source": "incident_commander", 
-    #         "location": location, 
-    #         "mission_objectives": mission_objectives, 
-    #     }
-    #     response = agent.process_request(message)
+        message = {
+            "source": "incident_commander", 
+            "location": location, 
+            "mission_objectives": mission_objectives, 
+        }
+        response = agent.process_request(message)
 
-    #     # response should say that it understands the mission objectives
-    #     assert "mission_objectives_understood" in response and response["mission_objectives_understood"] == True
+        assert "mission_objectives_understood" in response and response["mission_objectives_understood"] == True
 
-    #     # mission objectives should be saved
-    #     assert agent.mission_objectives == mission_objectives
+        # identify mission objectives
+        assert obj1_keyword in agent.mission_objectives[0]
+        assert obj2_keyword in agent.mission_objectives[1]
