@@ -2,3 +2,4 @@ pyautogen
 python-dotenv
 pytest
 autogen
+ag2[gemini]
