@@ -16,12 +16,21 @@ Notes about the agent:
 
 ## Setup
 1. Clone this forked repository.
+
 2. Set up a Python environment with version `3.10.0`.
+
 3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 pip install -e .
 ```
+
+Pip might have dependency resolver issues from requirements.txt. The fix is install the necessary packages explicitly with pip:
+```bash
+# for example...
+pip install httplib2
+```
+
 4. Configure environment variables in your `.env` file:
 ```
 GOOGLE_API_KEY=<your_google_api_key_here>
