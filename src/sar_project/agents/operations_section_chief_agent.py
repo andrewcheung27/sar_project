@@ -1,8 +1,6 @@
-from sar_project.agents.base_agent import SARBaseAgent
-# import google.generativeai as genai
-from google import genai
-# from google.genai.types import HttpOptions
 import json
+from google import genai
+from sar_project.agents.base_agent import SARBaseAgent
 
 
 # message to explain the LLM's role in the SAR system
@@ -17,6 +15,8 @@ kb_message = """Your current task is to update your knowledge base with informat
 Convert the following information into JSON:
 """
 
+# schemas for putting information in the knowledge base. 
+# the LLM will take text input and generate JSON according to one of these schemas.
 terrain_schema = {
     "type": "OBJECT",
     "properties": {
@@ -38,13 +38,13 @@ weather_schema = {
 resources_schema = {
     "type": "ARRAY", 
     "items": {
-        "type": "OBJECT",
+        "type": "OBJECT", 
         "properties": {
-            "description": {"type": "STRING"}, 
-            "availability": {"type": "STRING"},
-            "location": {"type": "STRING"},
-        },
-        "required": ["description", "availability", "location"]
+            "name": {"type": "STRING"}, 
+            "availability": {"type": "STRING"}, 
+            "location": {"type": "STRING"}
+        }, 
+        "required": ["name", "availability", "location"]
     }
 }
 
@@ -130,11 +130,12 @@ class OperationsSectionChiefAgent(SARBaseAgent):
             else:
                 print(error)
         
-        if "resources" in message:
-            response, error = self._text_to_kb_data(resources_schema, message["resources_data"])
+        if "resource_status" in message:
+            response, error = self._text_to_kb_data(resources_schema, message["resource_status"])
             if error is None:
-                for r in response.keys():
-                    self.kb.update_resource_status(r, response[r])
+                for resource_info in response:
+                    resource_name = resource_info.pop("name")
+                    self.kb.update_resource_status(resource_name, resource_info)
                 kb_updated = True
             else:
                 print(error)
@@ -163,6 +164,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
     # https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/control-generated-output
     def _generate_json_str(self, prompt, response_schema):
+        """Based on a prompt, generates JSON according to the specified schema."""
         try:
             response = self.genai_client.models.generate_content(
                 model="gemini-2.0-flash", 
@@ -175,24 +177,6 @@ class OperationsSectionChiefAgent(SARBaseAgent):
             return response.text
         except Exception as e:
             return f"Error: {e}"
-
-    # # function copied from Ashton Alonge's message on Slack
-    # def _query_gemini(self, prompt, model="gemini-pro", max_tokens=200):
-    #     """Query Google Gemini API and return response."""
-    #     try:
-    #         # response = genai.GenerativeModel(model).generate_content(prompt)
-    #         # return response.text
-    #         response = self.genai_client.models.generate_content(
-    #             model=model, 
-    #             contents=prompt, 
-    #             config={
-    #                 "response_mime_type": "application/json",
-    #                 "response_schema": response_schema
-    #             })
-    #         # TODO: return response as JSON
-    #         return response.text
-    #     except Exception as e:
-    #         return f"Error: {e}"
 
 
     def update_status(self, status):
