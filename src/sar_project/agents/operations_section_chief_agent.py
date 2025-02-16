@@ -72,7 +72,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         self.mission_objectives = []
 
 
-    def process_request(self, message: dict):
+    def process_request(self, message: dict) -> dict:
         """Process a request from either the Incident Commander or Search Team Leader."""
         try:
             # need to know who sent the message
@@ -90,7 +90,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
             return {"Error": str(e)}
 
 
-    def _process_request_from_incident_commander(self, message: dict):
+    def _process_request_from_incident_commander(self, message: dict) -> dict:
         """Process a request from the Incident Commander, which should outline 
         mission objectives and provide information for the knowledge base.
         """
@@ -117,7 +117,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         return response
 
 
-    def _process_request_from_search_team_leader(self, message: dict):
+    def _process_request_from_search_team_leader(self, message: dict) -> dict:
         # TODO
         pass
 
