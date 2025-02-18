@@ -1,6 +1,9 @@
 # Example Search Plan - SAR Assignment 1
 
-## Information Given to the Agent
+The agent takes a message with natural language strings in the `terrain_data`, `weather_data`, `resource_status`, and `mission_objectives` fields. Then, it generates a search plan.
+
+
+## I. Defining the Input Strings in Python
 location = "San Luis Obispo"
 
 test_elevation = 1000
@@ -27,7 +30,18 @@ obj2_keyword = "Bob"
 mission_objectives = f"First, you need to {obj1}. Your secondary objective is to {obj2}"
 
 
-## Generated Search Plan
+## II. Information Given to the Agent
+message = {  
+    "source": "incident_commander",  
+    "location": location,  
+    "mission_objectives": mission_objectives,  
+    "terrain_data": terrain_data,  
+    "weather_data": weather_data,  
+    "resource_status": resource_status_data  
+}
+
+
+## III. Generated Search Plan
 SEARCH PLAN:
 Okay, here's a preliminary search plan, taking into account the mission objectives, terrain, weather, and available resources. This plan will need to be flexible and adjusted based on field reports.
 
