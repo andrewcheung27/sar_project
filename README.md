@@ -1,5 +1,8 @@
 # Operations Section Chief Agent
+
 Author: Andrew Cheung
+
+This agent was developed for the AI for Search and Rescue Project. See the upstream README file for more details.
 
 
 ## Description
