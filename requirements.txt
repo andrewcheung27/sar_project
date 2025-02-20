@@ -3,3 +3,5 @@ python-dotenv
 pytest
 autogen
 ag2[gemini]
+google~=3.0.0
+protobuf~=5.29.3
