@@ -91,17 +91,17 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         try:
             # need to know who sent the message
             if "source" not in message:
-                return {"Error": "Message does not have a source"}
+                raise ValueError("Message must provide 'source' key")
 
             if message["source"] == "incident_commander":
                 return self._process_request_from_incident_commander(message)
             elif message["source"] == "search_team_leader":
                 return self._process_request_from_search_team_leader(message)
             else:
-                return {"Error": "Unexpected message source"}
+                raise ValueError("Invalid message source")
 
         except Exception as e:
-            return {"Error": str(e)}
+            return {"error": str(e)}
 
 
     def _process_request_from_incident_commander(self, message: dict) -> dict:
@@ -112,7 +112,7 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
         # require location
         if "location" not in message:
-            return {"Error": "Location was not provided"}
+            raise ValueError("Message must provide 'location' key")
 
         # update knowledge base
         kb_updated = self._update_knowledge_base(message)
@@ -133,16 +133,14 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         response["search_plan"] = plan
 
         # split the search plan into a plan for each Search Team
-        search_team_plans, error = self._split_search_plan(self.search_team_info, plan)
-        if error:
-            response["search_team_plans"] = [error]
-            return response
-        # convert search_team_plans from list of dicts to list of strings
-        search_team_plans = [item["plan"] for item in search_team_plans]
-        response["search_team_plans"] = search_team_plans
-        # send instructions to Search Team Leaders
-        for i in range(len(search_team_plans)):
-            self._send_plan_to_search_team_leader(search_team_plans[i], i)
+        search_team_plans = self._split_search_plan(self.search_team_info, plan)
+        if len(search_team_plans) > 0:
+            # convert search_team_plans from list of dicts to list of strings
+            search_team_plans = [item["plan"] for item in search_team_plans]
+            response["search_team_plans"] = search_team_plans
+            # send instructions to Search Team Leaders
+            for i in range(len(search_team_plans)):
+                self._send_plan_to_search_team_leader(search_team_plans[i], i)
 
         return response
 
@@ -166,32 +164,23 @@ class OperationsSectionChiefAgent(SARBaseAgent):
 
         if "terrain_data" in message:
             prompt += message["terrain_data"]
-            response, error = self._text_to_kb_data(prompt, terrain_schema)
-            if error is None:
-                self.kb.update_terrain(message["location"], response)
-                kb_updated = True
-            else:
-                print(error)
+            response = self._text_to_kb_data(prompt, terrain_schema)
+            self.kb.update_terrain(message["location"], response)
+            kb_updated = True
 
         if "weather_data" in message:
             prompt += message["weather_data"]
-            response, error = self._text_to_kb_data(prompt, weather_schema)
-            if error is None:
-                self.kb.update_weather(message["location"], response)
-                kb_updated = True
-            else:
-                print(error)
-        
+            response = self._text_to_kb_data(prompt, weather_schema)
+            self.kb.update_weather(message["location"], response)
+            kb_updated = True
+
         if "resource_status" in message:
             prompt += message["resource_status"]
-            response, error = self._text_to_kb_data(prompt, resources_schema)
-            if error is None:
-                for resource_info in response:
-                    resource_name = resource_info.pop("name")
-                    self.kb.update_resource_status(resource_name, resource_info)
+            response = self._text_to_kb_data(prompt, resources_schema)
+            for resource_info in response:
+                resource_name = resource_info.pop("name")
+                self.kb.update_resource_status(resource_name, resource_info)
                 kb_updated = True
-            else:
-                print(error)
 
         return kb_updated
 
@@ -205,13 +194,10 @@ class OperationsSectionChiefAgent(SARBaseAgent):
             return False
 
         prompt = system_message + mission_objectives_message + message["mission_objectives"]
-        response, error = self._text_to_kb_data(prompt, mission_objectives_schema)
+        response = self._text_to_kb_data(prompt, mission_objectives_schema)
 
-        if error is None:
-            self.mission_objectives = response
-            return True
-        else:
-            return False
+        self.mission_objectives = response
+        return True
 
 
     def _create_search_plan(self) -> str:
@@ -228,25 +214,20 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         prompt += f"This is the weather information: {self.kb.weather_data} \n"
         prompt += f"And finally, these are the available resources: {self.kb.resource_status}"
 
-        # generate plan
-        try:
-            response = self.genai_client.models.generate_content(
-                model="gemini-2.0-flash", 
-                contents=prompt
-            )
-            return response.text
-        except Exception as e:
-            return f"Error: {e}"
+        response = self.genai_client.models.generate_content(
+            model="gemini-2.0-flash", 
+            contents=prompt
+        )
+        return response.text
 
 
-    def _split_search_plan(self, search_team_info: list, search_plan: str) -> tuple:
+    def _split_search_plan(self, search_team_info: list, search_plan: str):
         """Input: A Search Plan generated by self._create_search_plan().
-        Output: 2-Tuple of the JSON result (made of lists/dicts) 
-        and an error message, which is None if there is no error.
+        Output: A Python object representing the generated output.
         """
         # don't do anything without search team info
         if type(search_team_info) != list or len(search_team_info) == 0:
-            return [], "Error: search team info not provided"
+            return []
 
         prompt = f"Your current task is to divide the Search Plan into plans for each individual Search Team."
         prompt += f"The sub-plans will be shared with the corresponding Search Team Leaders. \n"
@@ -254,51 +235,29 @@ class OperationsSectionChiefAgent(SARBaseAgent):
         prompt += f"This is the Search Plan to split up: {search_plan} \n"
 
         response = self._generate_json_str(prompt, team_search_plan_schema)
-
-        if (response.startswith("Error")):
-            return [], response
-
-        # return parsed JSON
-        try:
-            parsed_response = json.loads(response)
-            return parsed_response, None
-        except Exception as e:
-            return [], f"Error: {e}"
+        return json.loads(response)
 
 
-    def _text_to_kb_data(self, prompt: str, schema) -> tuple:
+    def _text_to_kb_data(self, prompt: str, schema):
         """Input: A prompt and a Google Gemini JSON schema to specify the JSON output.
-        Output: 2-Tuple of the JSON result (made of lists/dicts) 
-        and an error message, which is None if there is no error.
+        Output: A Python object representing the generated output.
         """
         response = self._generate_json_str(prompt, schema)
-
-        if (response.startswith("Error")):
-            return {}, response
-
-        # return parsed JSON
-        try:
-            parsed_response = json.loads(response)
-            return parsed_response, None
-        except Exception as e:
-            return {}, f"Error: {e}"
+        return json.loads(response)
 
 
     # https://cloud.google.com/vertex-ai/generative-ai/docs/multimodal/control-generated-output
-    def _generate_json_str(self, prompt: str, response_schema):
+    def _generate_json_str(self, prompt: str, response_schema: dict):
         """Based on a prompt, generates JSON according to the specified schema."""
-        try:
-            response = self.genai_client.models.generate_content(
-                model="gemini-2.0-flash", 
-                contents=prompt, 
-                config={
-                    "response_mime_type": "application/json",
-                    "response_schema": response_schema
-                }
-            )
-            return response.text
-        except Exception as e:
-            return f"Error: {e}"
+        response = self.genai_client.models.generate_content(
+            model="gemini-2.0-flash", 
+            contents=prompt, 
+            config={
+                "response_mime_type": "application/json",
+                "response_schema": response_schema
+            }
+        )
+        return response.text
 
 
     def update_status(self, status):

@@ -84,6 +84,7 @@ class TestOperationsSectionChiefAgent:
             "terrain_data": terrain_data
         }
         response = agent.process_request(message)
+        assert "error" not in response
 
         assert "knowledge_base_updated" in response and response["knowledge_base_updated"] == True
 
@@ -108,6 +109,7 @@ class TestOperationsSectionChiefAgent:
             "weather_data": weather_data
         }
         response = agent.process_request(message)
+        assert "error" not in response
 
         assert "knowledge_base_updated" in response and response["knowledge_base_updated"] == True
 
@@ -128,6 +130,7 @@ class TestOperationsSectionChiefAgent:
             "resource_status": resource_status_data
         }
         response = agent.process_request(message)
+        assert "error" not in response
 
         assert "knowledge_base_updated" in response and response["knowledge_base_updated"] == True
 
@@ -149,6 +152,7 @@ class TestOperationsSectionChiefAgent:
             "mission_objectives": mission_objectives, 
         }
         response = agent.process_request(message)
+        assert "error" not in response
 
         assert "mission_objectives_understood" in response and response["mission_objectives_understood"] == True
 
@@ -172,6 +176,7 @@ class TestOperationsSectionChiefAgent:
             "resource_status": resource_status_data
         }
         response = agent.process_request(message)
+        assert "error" not in response
 
         # the response should show that the agent processed the mission objectives and knowledge base update, and created a search plan
         assert "mission_objectives_understood" in response and response["mission_objectives_understood"] == True
@@ -205,6 +210,7 @@ class TestOperationsSectionChiefAgent:
             "search_team_info": search_team_info
         }
         response = agent.process_request(message)
+        assert "error" not in response
 
         # the response should show that the agent processed the mission objectives and knowledge base update, and created a search plan
         assert "mission_objectives_understood" in response and response["mission_objectives_understood"] == True
@@ -232,4 +238,3 @@ class TestOperationsSectionChiefAgent:
         assert type(search_team_plans) == list
         assert len(search_team_plans) == len(search_team_info)
         # TODO: search plans for each team should mention the members of the team. need to change some things to make this work because search_team_plans is not necessarily in order.
-
