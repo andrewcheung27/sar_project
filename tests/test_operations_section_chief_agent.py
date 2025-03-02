@@ -223,9 +223,10 @@ class TestOperationsSectionChiefAgent:
         search_team_plans = response["search_team_plans"]
 
         print("test_create_search_plan_with_search_team_info() generated this search plan:\n" + search_plan)
-        for i in range(len(search_team_plans)):
-            print(f"Search Team Plan {i}:")
-            print(search_team_plans[i] + "\n")
+        for p in search_team_plans:
+            num = p["search_team_number"]
+            print(f"Search Team Plan {num}:")
+            print(p["plan"] + "\n")
 
         # check that the plan covers the mission objectives and the info from the knowledge base
         assert obj1_keyword in search_plan
@@ -237,4 +238,8 @@ class TestOperationsSectionChiefAgent:
         # there should be one plan for each search team
         assert type(search_team_plans) == list
         assert len(search_team_plans) == len(search_team_info)
-        # TODO: search plans for each team should mention the members of the team. need to change some things to make this work because search_team_plans is not necessarily in order.
+        # each Search Team Plan should say something about all members of the team
+        team_members = [[t1_m1, t1_m2, t1_m3], [t2_m1, t2_m2, t2_m3], [t3_m1, t3_m2, t3_m3]]
+        for i in range(len(team_members)):
+            for member in team_members[i]:
+                assert member in search_team_plans[i]["plan"]
