@@ -72,195 +72,151 @@ message = {
 
 
 ## III. Generated Search Plan
-Okay, here's a search plan draft based on the mission objectives, available teams, terrain, weather, and resources. This plan prioritizes the safety of our teams and focuses on efficiently locating Bob, given the challenging conditions.
+Okay, here's a search plan I've developed, considering the mission objectives, available teams, terrain, weather, and resources:
 
-**Search Plan: Missing Child - Bob - Cal Poly Field Trip**
+**Incident Action Plan – Operations Section: Search and Rescue**
 
-**I. Mission Objectives (Restated):**
+**I. Mission Objectives:**
 
 *   Ensure the safety and preparedness of all search team members.
-*   Locate Bob, a missing 10-year-old student, during the field trip to Cal Poly.
+*   Locate Bob, a missing 10-year-old student.
 
-**II. Incident Commander's Intent:**
+**II. Situation Assessment:**
 
-*   Conduct a thorough and rapid search, prioritizing areas where a 10-year-old might wander or become stranded, given the terrain and weather conditions.
-*   Maintain constant communication with all teams and adapt the search strategy as new information becomes available.
-*   Account for the potential for hypothermia given the temperature and rain.
-*   Take extra caution around landslide and stream areas.
+*   **Missing Person:** Bob, 10 years old.
+*   **Location:** San Luis Obispo, mountainous terrain with few passable trails.
+*   **Terrain Hazards:** Two landslides in the past five years, rapid stream.
+*   **Weather:** Heavy rain for the next two days, temperature 45°F, wind speed 30 mph. This poses a significant risk of hypothermia.
+*   **Resource Constraints:** Low availability of flashlights.
 
-**III. Safety Considerations:**
+**III. Operational Period:**
 
-*   **Weather:**  Heavy rain, low temperature (45°F), and high wind speed (30 mph) create a high risk of hypothermia. All teams must have appropriate rain gear and be trained in recognizing and treating hypothermia.
-*   **Terrain:**  Mountainous terrain with few passable trails increases the risk of slips, trips, and falls. The landslide and rapid stream pose significant hazards. Teams must exercise extreme caution in these areas.
-*   **Communication:** Due to the mountainous terrain, communication may be unreliable. Establish primary and alternate communication methods (e.g., satellite phones if available, designated relay points). Regular check-ins are mandatory.
+*   Immediately and for the next 24 hours. Re-evaluate and adjust the plan at that time.
 
-**IV. Team Assignments & Search Areas:**
+**IV. Search Strategy:**
 
-Given Bob's age and the environmental conditions, we will focus our search on areas where a lost child might reasonably be found, and areas that present the greatest immediate risk.
+Given Bob's age, the mountainous terrain, inclement weather, and terrain hazards, the strategy will focus on the following:
 
-*   **Team 1 (Experienced):**
-    *   **Personnel:** Joel, Jia, Franz
-    *   **Mission:** Perform a hasty search along potential trails near where the field trip was taking place and along the stream. Assess the stream’s width and depth and find a passable crossing location. Because Franz is a former combat medic, he will be responsible for providing medical aid. 
-    *   **Rationale:**  Experienced team best suited for initial assessment of hazardous terrain and medical response. Jia is well-suited to search for clues while Joel can help keep the team calm under pressure.
-    *   **Equipment:** First Aid Kit, rope, stream crossing gear, communication equipment, and high-visibility clothing.
-    *   **Specific tasks:** Mark any findings clearly with flagging tape.
+*   **Prioritize likely escape routes and areas where a child might seek shelter.** This includes areas near trails, natural shelters (caves, overhangs), and potentially lower elevations due to the cold and wind.
+*   **Utilize the strengths of each team to maximize coverage and effectiveness while mitigating risks.**
+*   **Maintain constant communication and monitoring of team safety.**
 
-*   **Team 2 (Mixed Expertise):**
-    *   **Personnel:** Riley, Meyli, Andrew
-    *   **Mission:**  Search for Bob in rocky locations.
-    *   **Rationale:** Meyli is a rock climber, while Riley has military reconnaissance experience. Andrew can use his expertise in search strategies to plan the search.
-    *   **Equipment:** Climbing Gear, Navigation Tools, Andrew will be a safety officer, communication equipment, and high-visibility clothing.
+**V. Task Assignments:**
 
-*   **Team 3 (Specialized):**
-    *   **Personnel:** Deja, Peter, Jack
-    *   **Mission:**
-        *   Jack will pilot the drone to search the area broadly, focusing on areas identified by Teams 1 and 2 as potential points of interest. He will prioritize areas that are difficult to access on foot, especially near the landslide zone (maintaining a safe distance).
-        *   Deja and her search dogs will assist in identifying trails and spots where Bob could have passed by.
-        *   Peter will be on standby to search the stream if requested.
-    *   **Rationale:** Jack's drone can cover a large area quickly, and Deja's dogs can detect Bob's scent. Peter is available to search bodies of water.
-    *   **Equipment:** Drone with extra batteries, dog-handling gear, diving gear, communication equipment, and high-visibility clothing.
+*   **General Safety Instructions for All Teams:**
+    *   Strict adherence to the buddy system.
+    *   Constant communication with Operations Section (me) via radio.
+    *   Monitor for signs of hypothermia in themselves and others. Carry extra layers.
+    *   Avoid the rapid stream at all costs.
+    *   Be aware of the potential for landslides, especially given the heavy rain.
+    *   Document all findings (clues, observations) with photos and detailed notes.
+    *   If Bob is found, immediately provide first aid, establish communications, and await extraction.
+*   **Team 1 (Joel, Jia, Franz):**
+    *   **Task:** Primary ground search team focusing on areas closest to the last known location of Bob.
+    *   **Rationale:** Experience is crucial in these conditions. Franz's medical expertise is highly valuable. Jia's clue-spotting abilities are beneficial for locating tracks or items belonging to Bob.
+    *   **Specific Area:** Focus on the most accessible trails closest to the suspected point of departure. Start search pattern at the trailhead and expand outwards.
+    *   **Equipment:** Full medical kit (carried by Franz), extra warm layers for all members, map and compass.
+    *   **Contingency:** Prepare for possible emergency medical situation.
+*   **Team 2 (Riley, Meyli, Andrew):**
+    *   **Task:** Secondary search team, focusing on more difficult and dangerous terrain.
+    *   **Rationale:** Riley's reconnaissance experience will be beneficial for navigation. Meyli's rock climbing experience makes her suitable for traversing challenging terrain. Andrew will remain at base and help guide the other team members through communications.
+    *   **Specific Area:** Focus on higher elevations and areas off the main trails where Bob might have wandered.
+    *   **Equipment:** Ropes and climbing gear (for Meyli), map and compass, and cold weather gear.
+    *   **Contingency:** Use caution when crossing streams or traversing steep slopes. Report back to base for all hazards encountered.
+*   **Team 3 (Deja, Peter, Jack):**
+    *   **Task:** Support and reconnaissance.
+    *   **Rationale:** Deja's dogs can cover large areas quickly and locate Bob by scent. Jack's drone can provide an aerial view of the search area, and Peter can search water.
+    *   **Specific Area:** Drone reconnaissance of the overall search area to identify potential areas of interest or hazards. Coordinate with ground teams to deploy dogs to specific areas identified by drone. Peter will be on standby for water rescue, if necessary.
+    *   **Equipment:** Drone with spare batteries (Jack), dog search equipment (Deja), and diving gear for Peter.
+    *   **Contingency:** Be wary of low visibility due to rain and fog. Be aware of the potential for drone crashes.
 
-**V. Resource Allocation:**
+**VI. Resource Management:**
 
-*   **Drinking Water:** Gather drinking water from Franz's house.
-*   **Flashlights:** Gather flashlights from Andrew's house. Ensure each team has an adequate number of flashlights with extra batteries.
-*   **Rain Gear:** Ensure all team members have appropriate rain gear.
-*   **Navigation:** Each team must have a GPS and a paper map of the area.
-*   **Communication:** Ensure reliable communication devices for all teams. Consider deploying a communication relay point if necessary.
+*   **Water:** Ensure all teams have sufficient drinking water. Refill from Franz's house if needed before deployment.
+*   **Flashlights:** Due to limited availability, prioritize flashlights for Team 1 and strategic placement along trails. Get flashlights from Andrew's house immediately.
 
-**VI. Communication Plan:**
+**VII. Communications:**
 
-*   **Primary:** Radio communication on designated frequencies.
-*   **Secondary:** Satellite phones (if available).
-*   **Contingency:** Pre-determined rendezvous points and time intervals for physical check-ins if electronic communication fails.
-*   **Reporting:** All teams will report their location and findings every hour.  Critical information (e.g., discovery of clues, changes in terrain, injuries) must be reported immediately.
+*   All teams will maintain radio contact with the Operations Section Chief.
+*   Report all findings, changes in conditions, and safety concerns immediately.
+*   Establish a pre-determined communication schedule for regular check-ins.
 
-**VII. Adaptation Plan:**
+**VIII. Risk Management:**
 
-*   **Based on Team 1's Assessment:** If the stream is deemed impassable, adjust search areas to prioritize the near side of the stream.
-*   **Based on Drone Imagery:** Jack's drone imagery will be used to identify potential search areas and hazards.
-*   **Based on Dog Scent:** Deja and her dogs may be able to pinpoint a potential area for Bob to be.
-*   **Missing Person Profile:** If we get more information about Bob’s personality (e.g., if he is afraid of heights, likes to climb trees, is easily frightened), we will adapt the search plan accordingly.
+*   **Hypothermia:** High risk due to weather. Emphasis on warm clothing, monitoring for symptoms, and rapid evacuation if necessary.
+*   **Landslides:** Monitor for unstable slopes. Avoid areas with recent slide activity.
+*   **Rapid Stream:** Avoid crossing the stream.
+*   **Injuries:** Be prepared for potential injuries due to falls, slips, and exposure. Full medical kit with Team 1.
 
-**VIII.  Contingency Planning:**
+**IX. Demobilization:**
 
-*   **Lost Search Team Member:**  Immediately initiate a search for the lost team member, using the remaining teams.
-*   **Medical Emergency:**  Franz (Team 1) is designated as the primary medical responder.  Evacuation plan in place.
-*   **Worsening Weather:**  If weather conditions significantly worsen (e.g., increased wind, flash flood warning), suspend the search and move teams to safe locations.
+*   Demobilization will be determined by the Incident Commander based on search progress and the likelihood of finding Bob.
 
-**IX.  Demobilization:**
+**X. Contingency Planning:**
 
-*   Demobilization will be ordered by the Incident Commander when the search is completed or suspended.  All teams will be debriefed before being released.
+*   **If Bob is not found within the first 12 hours:** Re-evaluate the search area and adjust the strategy based on gathered information. Consider expanding the search area and requesting additional resources.
+*   **If weather conditions worsen:** Suspend the search if conditions become too dangerous.
+*   **If a team member is injured:** Immediately provide first aid and evacuate the injured person.
 
-**X. Next Steps:**
+**XI. Briefing:**
 
-1.  Brief all teams on the search plan.
-2.  Gather resources (water, flashlights) and distribute them to teams.
-3.  Establish communication protocols.
-4.  Deploy teams to their assigned search areas.
-5.  Continuously monitor weather conditions and adjust the plan as needed.
-6.  Follow the mission objectives.
-
-This is a draft plan and will be adapted based on the Incident Commander's guidance, and real-time field reports. The safety of our teams remains the top priority.
+*   All team leaders will be briefed on this plan before deployment.
+*   Ensure all team members understand their assignments, safety procedures, and communication protocols.
 
 
 
 ## IV. Generated Plans to Send to Each Search Team
 
-### Search Team Plan 1:
-**Search Plan: Missing Child - Bob - Cal Poly Field Trip - Team 1**
+### A. Search Team Plan 0
+**Team 1 (Joel, Jia, Franz):**
+*   **Task:** Primary ground search team focusing on areas closest to the last known location of Bob.
+*   **Rationale:** Experience is crucial in these conditions. Franz's medical expertise is highly valuable. Jia's clue-spotting abilities are beneficial for locating tracks or items belonging to Bob.
+*   **Specific Area:** Focus on the most accessible trails closest to the suspected point of departure. Start search pattern at the trailhead and expand outwards.
+*   **Equipment:** Full medical kit (carried by Franz), extra warm layers for all members, map and compass.
+*   **Contingency:** Prepare for possible emergency medical situation.
 
-**I. Mission Objectives:** Locate Bob, a missing 10-year-old student, during the field trip to Cal Poly. Ensure the safety and preparedness of all search team members.
+**General Safety Instructions for All Teams:**
+*   Strict adherence to the buddy system.
+*   Constant communication with Operations Section (me) via radio.
+*   Monitor for signs of hypothermia in themselves and others. Carry extra layers.
+*   Avoid the rapid stream at all costs.
+*   Be aware of the potential for landslides, especially given the heavy rain.
+*   Document all findings (clues, observations) with photos and detailed notes.
+*   If Bob is found, immediately provide first aid, establish communications, and await extraction.
 
-**II. Incident Commander's Intent:** Conduct a thorough and rapid search, prioritizing areas where a 10-year-old might wander or become stranded, given the terrain and weather conditions. Maintain constant communication with all teams and adapt the search strategy as new information becomes available. Account for the potential for hypothermia given the temperature and rain. Take extra caution around landslide and stream areas.
+**Water:** Ensure all teams have sufficient drinking water. Refill from Franz's house if needed before deployment.
+*   **Flashlights:** Due to limited availability, prioritize flashlights for Team 1 and strategic placement along trails. Get flashlights from Andrew's house immediately.
 
-**III. Safety Considerations:** Weather: Heavy rain, low temperature (45°F), and high wind speed (30 mph) create a high risk of hypothermia. All teams must have appropriate rain gear and be trained in recognizing and treating hypothermia. Terrain: Mountainous terrain with few passable trails increases the risk of slips, trips, and falls. The landslide and rapid stream pose significant hazards. Teams must exercise extreme caution in these areas. Communication: Due to the mountainous terrain, communication may be unreliable. Establish primary and alternate communication methods (e.g., satellite phones if available, designated relay points). Regular check-ins are mandatory.
+### B. Search Team Plan 1
+**Team 2 (Riley, Meyli, Andrew):**
+*   **Task:** Secondary search team, focusing on more difficult and dangerous terrain.
+*   **Rationale:** Riley's reconnaissance experience will be beneficial for navigation. Meyli's rock climbing experience makes her suitable for traversing challenging terrain. Andrew will remain at base and help guide the other team members through communications.
+*   **Specific Area:** Focus on higher elevations and areas off the main trails where Bob might have wandered.
+*   **Equipment:** Ropes and climbing gear (for Meyli), map and compass, and cold weather gear.
+*   **Contingency:** Use caution when crossing streams or traversing steep slopes. Report back to base for all hazards encountered.
 
-**IV. Team Assignment & Search Area:**
-*   **Team 1 (Experienced):**
-    *   **Personnel:** Joel, Jia, Franz
-    *   **Mission:** Perform a hasty search along potential trails near where the field trip was taking place and along the stream. Assess the stream’s width and depth and find a passable crossing location. Because Franz is a former combat medic, he will be responsible for providing medical aid. 
-    *   **Rationale:** Experienced team best suited for initial assessment of hazardous terrain and medical response. Jia is well-suited to search for clues while Joel can help keep the team calm under pressure.
-    *   **Equipment:** First Aid Kit, rope, stream crossing gear, communication equipment, and high-visibility clothing.
-    *   **Specific tasks:** Mark any findings clearly with flagging tape.
+**General Safety Instructions for All Teams:**
+*   Strict adherence to the buddy system.
+*   Constant communication with Operations Section (me) via radio.
+*   Monitor for signs of hypothermia in themselves and others. Carry extra layers.
+*   Avoid the rapid stream at all costs.
+*   Be aware of the potential for landslides, especially given the heavy rain.
+*   Document all findings (clues, observations) with photos and detailed notes.
+*   If Bob is found, immediately provide first aid, establish communications, and await extraction.
 
-**V. Communication Plan:** Primary: Radio communication on designated frequencies. Secondary: Satellite phones (if available). Contingency: Pre-determined rendezvous points and time intervals for physical check-ins if electronic communication fails. Reporting: Report your location and findings every hour. Critical information (e.g., discovery of clues, changes in terrain, injuries) must be reported immediately.
+### C. Search Team Plan 2
+**Team 3 (Deja, Peter, Jack):**
+*   **Task:** Support and reconnaissance.
+*   **Rationale:** Deja's dogs can cover large areas quickly and locate Bob by scent. Jack's drone can provide an aerial view of the search area, and Peter can search water.
+*   **Specific Area:** Drone reconnaissance of the overall search area to identify potential areas of interest or hazards. Coordinate with ground teams to deploy dogs to specific areas identified by drone. Peter will be on standby for water rescue, if necessary.
+*   **Equipment:** Drone with spare batteries (Jack), dog search equipment (Deja), and diving gear for Peter.
+*   **Contingency:** Be wary of low visibility due to rain and fog. Be aware of the potential for drone crashes.
 
-**VI. Adaptation Plan:**
-*   If the stream is deemed impassable, adjust search areas to prioritize the near side of the stream.
-
-**VII. Contingency Planning:**
-*   **Medical Emergency:**  Franz (Team 1) is designated as the primary medical responder.  Evacuation plan in place.
-
-**VIII. Next Steps:**
-1.  Brief all team members on the search plan.
-2.  Gather resources (water, flashlights) and distribute them to team members.
-3.  Establish communication protocols.
-4.  Deploy to assigned search area.
-5.  Continuously monitor weather conditions and adjust the plan as needed.
-6.  Follow the mission objectives.
-
-This is a draft plan and will be adapted based on the Incident Commander's guidance, and real-time field reports. The safety of our teams remains the top priority.
-
-### Search Team Plan 2:
-**Search Plan: Missing Child - Bob - Cal Poly Field Trip - Team 2**
-
-**I. Mission Objectives:** Locate Bob, a missing 10-year-old student, during the field trip to Cal Poly. Ensure the safety and preparedness of all search team members.
-
-**II. Incident Commander's Intent:** Conduct a thorough and rapid search, prioritizing areas where a 10-year-old might wander or become stranded, given the terrain and weather conditions. Maintain constant communication with all teams and adapt the search strategy as new information becomes available. Account for the potential for hypothermia given the temperature and rain. Take extra caution around landslide and stream areas.
-
-**III. Safety Considerations:** Weather: Heavy rain, low temperature (45°F), and high wind speed (30 mph) create a high risk of hypothermia. All teams must have appropriate rain gear and be trained in recognizing and treating hypothermia. Terrain: Mountainous terrain with few passable trails increases the risk of slips, trips, and falls. The landslide and rapid stream pose significant hazards. Teams must exercise extreme caution in these areas. Communication: Due to the mountainous terrain, communication may be unreliable. Establish primary and alternate communication methods (e.g., satellite phones if available, designated relay points). Regular check-ins are mandatory.
-
-**IV. Team Assignment & Search Area:**
-*   **Team 2 (Mixed Expertise):**
-    *   **Personnel:** Riley, Meyli, Andrew
-    *   **Mission:**  Search for Bob in rocky locations.
-    *   **Rationale:** Meyli is a rock climber, while Riley has military reconnaissance experience. Andrew can use his expertise in search strategies to plan the search.
-    *   **Equipment:** Climbing Gear, Navigation Tools, Andrew will be a safety officer, communication equipment, and high-visibility clothing.
-
-**V. Communication Plan:** Primary: Radio communication on designated frequencies. Secondary: Satellite phones (if available). Contingency: Pre-determined rendezvous points and time intervals for physical check-ins if electronic communication fails. Reporting: Report your location and findings every hour. Critical information (e.g., discovery of clues, changes in terrain, injuries) must be reported immediately.
-
-**VI. Next Steps:**
-1.  Brief all team members on the search plan.
-2.  Gather resources (water, flashlights) and distribute them to team members.
-3.  Establish communication protocols.
-4.  Deploy to assigned search area.
-5.  Continuously monitor weather conditions and adjust the plan as needed.
-6.  Follow the mission objectives.
-
-This is a draft plan and will be adapted based on the Incident Commander's guidance, and real-time field reports. The safety of our teams remains the top priority.
-
-### Search Team Plan 3:
-**Search Plan: Missing Child - Bob - Cal Poly Field Trip - Team 3**
-
-**I. Mission Objectives:** Locate Bob, a missing 10-year-old student, during the field trip to Cal Poly. Ensure the safety and preparedness of all search team members.
-
-**II. Incident Commander's Intent:** Conduct a thorough and rapid search, prioritizing areas where a 10-year-old might wander or become stranded, given the terrain and weather conditions. Maintain constant communication with all teams and adapt the search strategy as new information becomes available. Account for the potential for hypothermia given the temperature and rain. Take extra caution around landslide and stream areas.
-
-**III. Safety Considerations:** Weather: Heavy rain, low temperature (45°F), and high wind speed (30 mph) create a high risk of hypothermia. All teams must have appropriate rain gear and be trained in recognizing and treating hypothermia. Terrain: Mountainous terrain with few passable trails increases the risk of slips, trips, and falls. The landslide and rapid stream pose significant hazards. Teams must exercise extreme caution in these areas. Communication: Due to the mountainous terrain, communication may be unreliable. Establish primary and alternate communication methods (e.g., satellite phones if available, designated relay points). Regular check-ins are mandatory.
-
-**IV. Team Assignment & Search Area:**
-*   **Team 3 (Specialized):**
-    *   **Personnel:** Deja, Peter, Jack
-    *   **Mission:**
-        *   Jack will pilot the drone to search the area broadly, focusing on areas identified by Teams 1 and 2 as potential points of interest. He will prioritize areas that are difficult to access on foot, especially near the landslide zone (maintaining a safe distance).
-        *   Deja and her search dogs will assist in identifying trails and spots where Bob could have passed by.
-        *   Peter will be on standby to search the stream if requested.
-    *   **Rationale:** Jack's drone can cover a large area quickly, and Deja's dogs can detect Bob's scent. Peter is available to search bodies of water.
-    *   **Equipment:** Drone with extra batteries, dog-handling gear, diving gear, communication equipment, and high-visibility clothing.
-
-**V. Communication Plan:** Primary: Radio communication on designated frequencies. Secondary: Satellite phones (if available). Contingency: Pre-determined rendezvous points and time intervals for physical check-ins if electronic communication fails. Reporting: Report your location and findings every hour. Critical information (e.g., discovery of clues, changes in terrain, injuries) must be reported immediately.
-
-**VI. Adaptation Plan:**
-*   **Based on Drone Imagery:** Jack's drone imagery will be used to identify potential search areas and hazards.
-*   **Based on Dog Scent:** Deja and her dogs may be able to pinpoint a potential area for Bob to be.
-
-**VII. Next Steps:**
-1.  Brief all team members on the search plan.
-2.  Gather resources (water, flashlights) and distribute them to team members.
-3.  Establish communication protocols.
-4.  Deploy to assigned search area.
-5.  Continuously monitor weather conditions and adjust the plan as needed.
-6.  Follow the mission objectives.
-
-This is a draft plan and will be adapted based on the Incident Commander's guidance, and real-time field reports. The safety of our teams remains the top priority.
+**General Safety Instructions for All Teams:**
+*   Strict adherence to the buddy system.
+*   Constant communication with Operations Section (me) via radio.
+*   Monitor for signs of hypothermia in themselves and others. Carry extra layers.
+*   Avoid the rapid stream at all costs.
+*   Be aware of the potential for landslides, especially given the heavy rain.
+*   Document all findings (clues, observations) with photos and detailed notes.
+*   If Bob is found, immediately provide first aid, establish communications, and await extraction.
