@@ -12,6 +12,7 @@ system_message = """You are the Operations Section Chief for Search and Rescue (
             """
 # message to tell the LLM to update its knowledge base (string input, JSON output)
 kb_message = """Your current task is to update your knowledge base with information provided by the Incident Commander. 
+If there is any unknown information, provide a description in the 'unknown_information' field. 
 Convert the following information into JSON:
 """
 # message to tell the LLM to make a list of mission objectives, in order of highest to lowest importance
@@ -28,8 +29,9 @@ terrain_schema = {
         "description": {"type": "STRING"}, 
         "elevation": {"type": "INTEGER"},
         "obstacles": {"type": "ARRAY", "items": {"type": "STRING"}},
+        "unknown_information": {"type": "STRING"}
     },
-    "required": ["description", "elevation", "obstacles"]
+    "required": ["description", "elevation", "obstacles", "unknown_information"]
 }
 weather_schema = {
     "type": "OBJECT",
@@ -37,8 +39,9 @@ weather_schema = {
         "description": {"type": "STRING"}, 
         "temperature": {"type": "INTEGER"},
         "wind_speed": {"type": "INTEGER"},
+        "unknown_information": {"type": "STRING"}
     },
-    "required": ["description", "temperature", "wind_speed"]
+    "required": ["description", "temperature", "wind_speed", "unknown_information"]
 }
 resources_schema = {
     "type": "ARRAY", 

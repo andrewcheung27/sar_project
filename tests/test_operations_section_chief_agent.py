@@ -143,6 +143,46 @@ class TestOperationsSectionChiefAgent:
         assert agent.kb.resource_status[resource2]["location"] == location2
 
 
+    def test_terrain_data_unknown(self, agent):
+        """Test terrain info with some unknown information."""
+        terrain_data_partial = f"The terrain is rough."
+        message = {
+            "source": "incident_commander", 
+            "location": location, 
+            "terrain_data": terrain_data_partial
+        }
+        response = agent.process_request(message)
+        assert "error" not in response
+
+        assert "knowledge_base_updated" in response and response["knowledge_base_updated"] == True
+
+        # TODO: test description?
+
+        # it should have some description of the unknown information
+        assert "unknown_information" in agent.kb.terrain_data[location] and len(agent.kb.terrain_data[location]["unknown_information"]) > 0
+        print("unknown information in test_terrain_data_unknown() is: " + agent.kb.terrain_data[location]["unknown_information"])
+
+
+    def test_weather_data_unknown(self, agent):
+        """Test weather info with some unknown information."""
+        weather_data_partial = f"Expect inclement weather."
+        message = {
+            "source": "incident_commander", 
+            "location": location, 
+            "weather_data": weather_data_partial
+        }
+        response = agent.process_request(message)
+        assert "error" not in response
+
+        assert "knowledge_base_updated" in response and response["knowledge_base_updated"] == True
+
+        # TODO: test description?
+
+        # it should have some description of the unknown information
+        assert "unknown_information" in agent.kb.weather_data[location] and len(agent.kb.weather_data[location]["unknown_information"])
+        print("unknown information in test_weather_data_unknown() is: " + agent.kb.weather_data[location]["unknown_information"])
+
+
     # TESTS FOR GETTING MISSION OBJECTIVES FROM NATURAL LANGUAGE INPUT -------------------------------------------------
     def test_mission_objectives(self, agent):
         """Tests whether the agent can identify its mission objectives."""
